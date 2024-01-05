@@ -1,0 +1,96 @@
+type Query {
+  me: User!
+  users: [User!]!
+  post(id: ID!): Post!
+  posts: [Post!]!
+  myPosts: [Post!]!
+}
+
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  password: String!
+  imgUrl: String
+  posts: [Post!]!
+  comments: [Comment!]!
+}
+
+type Post {
+  id: ID!
+  title: String!
+  content: String!
+  imgUrl: String!
+  createdAt: String!
+  status: String!
+  author: User!
+  comments: [Comment!]!
+}
+
+type Comment {
+  id: ID!
+  text: String!
+  author: User!
+  postId: Post!
+}
+
+type AuthPayload {
+  token: String!
+  user: User!
+}
+
+input SignupUserInput {
+  name: String!
+  email: String!
+  password: String!
+  imgUrl: String
+}
+
+input LoginUserInput {
+  email: String!
+  password: String!
+}
+
+input CreatePostInput {
+  title: String!
+  content: String!
+  imgUrl: String!
+  createdAt: String!
+  status: String!
+  author: ID!
+}
+
+input CreateCommentInput {
+  text: String!
+  author: ID!
+  postId: ID!
+}
+
+input UpdateUserInput {
+  name: String
+  email: String
+  password: String
+  imgUrl: String
+}
+input UpdatePostInput {
+  title: String
+  content: String
+  imgUrl: String
+  status: String
+}
+
+input UpdateCommentInput {
+  text: String
+}
+
+type Mutation {
+  signupUser(data: SignupUserInput): AuthPayload!
+  loginUser(data: LoginUserInput): AuthPayload!
+  createPost(data: CreatePostInput): Post!
+  createComment(data: CreateCommentInput): Comment!
+  updateUser(id: ID!, data: UpdateUserInput): User!
+  updatePost(id: ID!, data: UpdatePostInput): Post!
+  deletePost(id: ID!): Post!
+  updateComment(id: ID!, data: UpdateCommentInput): Comment!
+  deleteComment(id: ID!): Comment!
+}
